@@ -1,33 +1,30 @@
 package org.majic.models;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "Articles")
 public class Article {
-    @Id
-    @SequenceGenerator(name = "sequence", sequenceName = "articles_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
     private Long id;
 
     private String title, announcement;
 
-    @Lob
-    @Column(length = 256)
     private String text;
 
-    @ManyToOne
-    @JoinColumn(name="author_id", nullable=false)
-    private User author;
+    private Long author_id;
 
     public Article() {
     }
 
-    public Article(String title, String announcement, String text, User author) {
+    public Article(Long id, String title, String announcement, String text, Long author_id) {
+        this.id = id;
         this.title = title;
         this.announcement = announcement;
         this.text = text;
-        this.author = author;
+        this.author_id = author_id;
+    }
+
+    public Article(String title, String announcement, String text, Long author_id) {
+        this.title = title;
+        this.announcement = announcement;
+        this.text = text;
+        this.author_id = author_id;
     }
 
     public Long getId() {
@@ -62,12 +59,12 @@ public class Article {
         this.announcement = announcement;
     }
 
-    public User getAuthor() {
-        return author;
+    public Long getAuthor_id() {
+        return author_id;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setAuthor_id(Long author_id) {
+        this.author_id = author_id;
     }
 
 }

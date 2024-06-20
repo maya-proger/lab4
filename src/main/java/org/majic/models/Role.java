@@ -1,14 +1,6 @@
 package org.majic.models;
 
-import jakarta.persistence.*;
-
-
-@Entity
-@Table(name="Roles")
 public class Role {
-    @Id
-    @SequenceGenerator(name = "sequence", sequenceName = "roles_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
     private Long id;
 
     private String name;
@@ -33,7 +25,11 @@ public class Role {
         this.name = name;
     }
 
+    public Role(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Role() {
     }
 }
-

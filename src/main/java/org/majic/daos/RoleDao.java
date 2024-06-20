@@ -1,47 +1,73 @@
 package org.majic.daos;
 import org.majic.models.Role;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.majic.utils.HibernateSessionFactoryUtil;
+import org.majic.services.DBService;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RoleDao {
 
-    public Role findById(int id) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Role role = session.get(Role.class, id);
-        session.close();
-        return role;
+    DBService dbService = new DBService();
+
+    public Optional<Role> findById(int id) throws SQLException {
+        String sqlQuery = String.format(
+                "SELECT * FROM roles WHERE id = %d",
+                id
+        );
+        ResultSet resultSet = dbService.makeQuery(sqlQuery);
+        if(resultSet != null){
+            resultSet.next();
+            return Optional.of(new Role(
+                    resultSet.getLong("id"),
+                    resultSet.getString("name")
+            ));
+        }
+        return Optional.empty();
     }
 
     public void save(Role role) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(role);
-        tx1.commit();
-        session.close();
+        String sqlQuery = String.format(
+                "INSERT INTO roles VALUES (nextval('roles_seq'), '%s')",
+                role.getName()
+        );
+        dbService.makeQuery(sqlQuery);
     }
 
     public void update(Role role) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(role);
-        tx1.commit();
-        session.close();
+        String sqlQuery = String.format(
+                "UPDATE roles SET name = '%s' WHERE id = %d",
+                role.getName(),
+                role.getId()
+        );
+        dbService.makeQuery(sqlQuery);
     }
 
-    public void delete(Role role) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(role);
-        tx1.commit();
-        session.close();
+    public void delete(Long id) {
+        String sqlQuery = String.format(
+                "DELETE FROM roles WHERE id = %d",
+                id
+        );
+        dbService.makeQuery(sqlQuery);
     }
 
-    public List<Role> findAll() {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        List<Role> roles = session.createQuery("From Role").list();
-        session.close();
+
+    public List<Role> findAll() throws SQLException {
+        String sqlQuery = "SELECT * FROM roles";
+        ResultSet resultSet = dbService.makeQuery(sqlQuery);
+        List<Role> roles = new ArrayList<>();
+        if(resultSet != null){
+            while(resultSet.next()){
+                roles.add(
+                        new Role(
+                                resultSet.getLong("id"),
+                                resultSet.getString("name")
+                        )
+                );
+            }
+        }
         return roles;
     }
 }

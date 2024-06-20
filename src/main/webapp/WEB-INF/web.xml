@@ -38,24 +38,4 @@
         <url-pattern>/roles/*</url-pattern>
     </servlet-mapping>
 
-    <filter>
-        <filter-name>hiddenHttpMethodFilter</filter-name>
-        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>hiddenHttpMethodFilter</filter-name>
-        <servlet-name>UserSimpleServlet</servlet-name>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>hiddenHttpMethodFilter</filter-name>
-        <servlet-name>ArticleSimpleServlet</servlet-name>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>hiddenHttpMethodFilter</filter-name>
-        <servlet-name>RoleSimpleServlet</servlet-name>
-    </filter-mapping>
-
 </web-app>

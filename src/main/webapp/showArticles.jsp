@@ -20,14 +20,14 @@
             <td>${article.getTitle()}</td>
             <td>${article.getAnnouncement()}</td>
             <td>${article.getText()}</td>
-            <td>${article.getAuthor().getId()}</td>
+            <td>${article.getAuthor_id()}</td>
             <td>
                 <form action = "updateArticle.jsp" method="post">
                     <input type="hidden" name="id" value="${article.getId()}">
                     <input type="hidden" name="title" value="${article.getTitle()}">
                     <input type="hidden" name="announcement" value="${article.getAnnouncement()}">
                     <input type="hidden" name="text" value="${article.getText()}">
-                    <input type="hidden" name="author_id" value="${article.getAuthor().getId()}">
+                    <input type="hidden" name="author_id" value="${article.getAuthor_id()}">
                     <input type="submit" value="Изменить" style="float:left">
                 </form>
                 <form action="deleteArticle.jsp" method="post">

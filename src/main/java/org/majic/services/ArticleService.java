@@ -3,7 +3,10 @@ package org.majic.services;
 import org.majic.daos.ArticleDao;
 import org.majic.models.Article;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ArticleService {
 
@@ -12,16 +15,22 @@ public class ArticleService {
     public ArticleService() {
     }
 
-    public Article findArticle(int id) {
-        return articleDao.findById(id);
+    public Optional<Article> findArticle(int id) {
+        Optional<Article> article = Optional.empty();
+        try{
+            article = articleDao.findById(id);
+        } catch(SQLException e){
+            System.out.println("Exception: " + e.getMessage());
+        }
+        return article;
     }
 
     public void saveArticle(Article article) {
         articleDao.save(article);
     }
 
-    public void deleteArticle(Article article) {
-        articleDao.delete(article);
+    public void deleteArticle(Long id) {
+        articleDao.delete(id);
     }
 
     public void updateArticle(Article article) {
@@ -29,6 +38,12 @@ public class ArticleService {
     }
 
     public List<Article> findAllArticles() {
-        return articleDao.findAll();
+        List<Article> articles = new ArrayList<>();
+        try{
+            articles = articleDao.findAll();
+        } catch(SQLException e){
+            System.out.println("Exception: " + e.getMessage());
+        }
+        return articles;
     }
 }

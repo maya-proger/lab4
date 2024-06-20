@@ -11,7 +11,7 @@
     <input type="hidden" name = "id" value="${param.id}">
     <input type="text" name="username" value="${param.username}" placeholder=${param.username}>
     <input type="text" name="email" value="${param.email}" placeholder=${param.email}>
-    <input type="password" name="password_hash" value="${param.password_hash}">
+    <input type="password" name="password" value="${param.password_hash}">
     <input type="hidden" name="_method" value="put">
     <input type="submit" value="Обновить">
 </form>

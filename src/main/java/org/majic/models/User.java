@@ -1,17 +1,9 @@
 package org.majic.models;
 
-import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Entity
-@Table(name="Users")
 public class User {
-    @Id
-    @SequenceGenerator(name = "sequence", sequenceName = "users_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
     private Long id;
 
     private String username;
@@ -20,8 +12,6 @@ public class User {
 
     private String password_hash;
 
-    @OneToMany(mappedBy="author")
-    @Column(name="articles")
     private List<Article> articles;
 
     public Long getId() {
@@ -76,5 +66,12 @@ public class User {
         this.email = email;
         this.password_hash = password_hash;
         this.articles = new ArrayList<>();
+    }
+
+    public User(Long id, String username, String email, String password_hash) {
+        this.username = username;
+        this.email = email;
+        this.password_hash = password_hash;
+        this.id = id;
     }
 }
